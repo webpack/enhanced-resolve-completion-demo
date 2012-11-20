@@ -14,7 +14,7 @@
 # you may remove these lines if you want to publish
 #  to a git repo. (i. e. in the gh-pages branch)
 /publishedStats.json
-/public
-/index.html
+# /public
+# /index.html
 /cache.manifest
 /server.js
