@@ -1,0 +1,26 @@
+- require("bootstrap");
+- require("./styles.less");
+.container-fluid
+	.row-fluid
+		.span6
+			form.form
+				fieldset
+					legend Code completion test
+					p Current directory: <code>/home/user/app</code>
+					label Type here:
+					input(type="text").span12.request-input
+					table.table.table-condensed.table-hover.completion-table
+					legend Resolve
+					lable Resolves to:
+					pre.result loader/index.js!moon/shine/is/cool.js
+		.span6
+			form.form
+				fieldset
+					legend Test filesystem
+					label Choose one:
+					select.filesystem-chooser
+						option(value="simple") Simple
+						option(value="depth") Depth
+						option(value="modules") Modules
+			h4 Preview
+			pre.filesystem
