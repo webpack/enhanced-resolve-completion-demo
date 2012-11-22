@@ -112,7 +112,7 @@ exports.modules = {
 								"main2.js": "",
 								"main3.js": "",
 								"shortcutdir.js": ""
-							}, 
+							},
 							lib: {
 								"AsyncFileSystem.js": "",
 								"benchmark.js": "",

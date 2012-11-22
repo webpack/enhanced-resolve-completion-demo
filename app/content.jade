@@ -22,5 +22,9 @@
 						option(value="simple") Simple
 						option(value="depth") Depth
 						option(value="modules") Modules
+					label Latency: (in ms, per fs access)
+					input(type="number", value="20").latency-input
+					label Cache timeout: (in ms)
+					input(type="number", value="4000").timeout-input
 			h4 Preview
 			pre.filesystem
