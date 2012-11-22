@@ -4,7 +4,8 @@ function prefix(str, prefix) {
 
 var customResolveFactory = require("enhanced-resolve/test/lib/customResolveFactory");
 var ConstFileSystem = require("enhanced-resolve/test/lib/ConstFileSystem");
-var AsyncFileSystem = require("enhanced-resolve/test/lib/AsyncFileSystem");
+var LatencyFileSystem = require("./LatencyFileSystem");
+var TimedCacheFileSystem = require("./TimedCacheFileSystem");
 var TestContents = require("./TestContents");
 
 function syncFsToString(fs, path) {
@@ -30,9 +31,9 @@ function syncFsToString(fs, path) {
 }
 
 var resolve = null;
-function initFilesystem(name) {
+function initFilesystem(name, latency, timeout) {
 	var syncFs = new ConstFileSystem(TestContents[name]);
-	resolve = customResolveFactory(new AsyncFileSystem(syncFs));
+	resolve = customResolveFactory(new TimedCacheFileSystem(new LatencyFileSystem(syncFs, latency), timeout));
 	$(".filesystem").text(syncFsToString(syncFs, "/home"));
 }
 
@@ -40,12 +41,16 @@ var jquery = require("jquery");
 require("jquery-caret");
 jquery(function($) {
 	$("body").html(require("./content.jade")());
-	initFilesystem("simple");
 
-	$(".filesystem-chooser").change(function() {
-		initFilesystem($(this).val());
+	function updateFilesystem() {
+		initFilesystem($(".filesystem-chooser").val(), parseInt($(".latency-input").val(), 10), parseInt($(".timeout-input").val(), 10));
 		oldText = "";
 		checkUpdate();
+	}
+	updateFilesystem();
+
+	$(".filesystem-chooser, .latency-input, .timeout-input").change(function() {
+		updateFilesystem();
 	});
 
 	$(".request-input").bind("focus keyup click mouseup mousedown", function() {
